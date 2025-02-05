@@ -2,6 +2,10 @@ export const LOGIN_REQUEST = "LOGIN_REQUEST";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAILURE = "LOGIN_FAILURE";
 
+export const GOOGLE_LOGIN_REQUEST = "GOOGLE_LOGIN_REQUEST";
+export const GOOGLE_LOGIN_SUCCESS = "GOOGLE_LOGIN_SUCCESS";
+export const GOOGLE_LOGIN_FAILURE = "GOOGLE_LOGIN_FAILURE";
+
 export const REGISTER_REQUEST = "REGISTER_REQUEST";
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 export const REGISTER_FAILURE = "REGISTER_FAILURE";
@@ -19,6 +23,21 @@ export const loginRequest = (credentials) => ({
 export const loginSuccess = (userData) => ({
   type: LOGIN_SUCCESS,
   payload: userData,
+});
+
+//Google Login
+export const googleLoginRequest = () => ({
+  type: GOOGLE_LOGIN_REQUEST,
+});
+
+export const googleLoginSuccess = () => ({
+  type: GOOGLE_LOGIN_SUCCESS,
+  payload: {},
+});
+
+export const googleLoginFailure = (error) => ({
+  type: GOOGLE_LOGIN_FAILURE,
+  payload: error,
 });
 
 export const loginFailure = (error) => ({

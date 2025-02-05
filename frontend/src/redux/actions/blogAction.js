@@ -6,6 +6,10 @@ export const ADD_BLOG_FAILURE = "ADD_BLOG_FAILURE";
 export const FETCH_MY_BLOGS_SUCCESS = "FETCH_MY_BLOGS_SUCCESS";
 export const FETCH_MY_BLOGS_FAILURE = "FETCH_MY_BLOGS_FAILURE";
 
+export const ADD_G_BLOG_REQUEST = "ADD_G_BLOG_REQUEST";
+export const ADD_G_BLOG_SUCCESS = "ADD_G_BLOG_SUCCESS";
+export const ADD_G_BLOG_FAILURE = "ADD_G_BLOG_FAILURE";
+
 export const FETCH_ALL_BLOGS_REQUEST = "FETCH_ALL_BLOGS_REQUEST";
 export const FETCH_ALL_BLOGS_SUCCESS = "FETCH_ALL_BLOGS_SUCCESS";
 export const FETCH_ALL_BLOGS_FAILURE = "FETCH_ALL_BLOGS_FAILURE";
@@ -25,6 +29,11 @@ export const addBlogFailure = (error) => ({
   payload: error,
 });
 
+//Action for Google Blog
+export const addgoogleBlogRequest = () => ({
+  type: ADD_G_BLOG_REQUEST,
+});
+
 // Actions for fetching my blogs
 export const fetchMyBlogsRequest = (userId) => ({
   type: FETCH_MY_BLOGS_REQUEST,
@@ -42,7 +51,7 @@ export const fetchMyBlogsFailure = (error) => ({
 });
 
 // Actions for fetching all blogs
-export const fetchAllBlogsRequest = ({ page = 1, limit = 5 }) => ({
+export const fetchAllBlogsRequest = ({ page = 1, limit = 9 }) => ({
   type: FETCH_ALL_BLOGS_REQUEST,
   payload: { page, limit }, // Pass the pagination object containing page and limit
 });

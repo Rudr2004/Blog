@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { registerRequest } from '../redux/actions/authAction.js';
-import { Box, TextField, Button, Typography } from '@mui/material';
+import { registerRequest, googleLoginRequest } from '../redux/actions/authAction.js';
+//import { useNavigate } from "react-router-dom";
+import { Box, TextField, Button, Typography, Divider } from '@mui/material';
 
 const Register = () => {
     const [form, setForm] = useState({ username: '', email: '', password: '' });
@@ -16,6 +17,11 @@ const Register = () => {
         e.preventDefault();
         dispatch(registerRequest(form));
     };
+
+    const googleSignin = (e) => {
+        e.preventDefault();
+        dispatch(googleLoginRequest());
+    }
 
     return (
         <Box sx={{
@@ -60,6 +66,35 @@ const Register = () => {
                 />
                 <Button type="submit" variant="contained" color="primary" disabled={loading} fullWidth sx={{ mt: 2 }}>
                     {loading ? 'Registering...' : 'Register'}
+                </Button>
+                <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', mt: 2, mb: 2 }}>
+                    <Divider sx={{ width: '40%', mr: 1 }} />
+                    <Typography variant="body2">or</Typography>
+                    <Divider sx={{ width: '40%', ml: 1 }} />
+                </Box>
+                <Button onClick={googleSignin}
+                    variant="contained"
+                    color="primary"
+                    startIcon={
+                        <img
+                            src="https://logos-world.net/wp-content/uploads/2020/09/Google-Symbol.png"
+                            alt=""
+                            style={{
+                                width: 24,
+                                height: 24,
+                                marginRight: 8,
+                            }}
+                        />
+                    }
+                    sx={{
+                        width: '100%',
+                        textTransform: 'none',
+                        backgroundColor: '#FFFFFF',
+                        color: '#4285F4',
+                        '&:hover': { backgroundColor: '#F7F7F7' },
+                    }}
+                >
+                    Sign in with Google
                 </Button>
             </form>
         </Box>

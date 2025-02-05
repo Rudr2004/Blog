@@ -2,7 +2,7 @@ import Blog from "../model/Blog.js";
 import User from "../model/User.js";
 
 export const getBlogs = async (req, res) => {
-  const { page = 1, limit = 15 } = req.query;
+  const { page = 1, limit = 50 } = req.query;
   try {
     const blogs = await Blog.find()
       .populate("user")

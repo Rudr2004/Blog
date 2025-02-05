@@ -78,15 +78,18 @@ function* fetchAllBlogsSaga() {
 function* addBlogSaga(action) {
   try {
     const token = localStorage.getItem("token");
-    const response = yield call(
-      axios.post,
-      "http://localhost:4000/api/blog/create",
-      action.payload,
-      {
-        headers: { Authorization: `Bearer ${token}` },
-      }
-    );
-    yield put(addBlogSuccess(response.data));
+    const token1 = localStorage.getItem("Googletoken");
+    if (token || token1) {
+      const response = yield call(
+        axios.post,
+        "http://localhost:4000/api/blog/create",
+        action.payload,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      yield put(addBlogSuccess(response.data));
+    }
   } catch (error) {
     yield put(addBlogFailure(error.message));
   }

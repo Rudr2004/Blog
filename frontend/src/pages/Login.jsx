@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { loginRequest } from '../redux/actions/authAction.js';
-import { Box, TextField, Button, Typography } from '@mui/material';
+import { googleLoginRequest, loginRequest } from '../redux/actions/authAction.js';
+import { Box, TextField, Button, Typography, Divider } from '@mui/material';
 import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
@@ -9,6 +9,7 @@ const Login = () => {
     const [form, setForm] = useState({ email: '', password: '' });
     const dispatch = useDispatch();
     const { loading } = useSelector((state) => state.auth);
+
 
     const handleChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value });
@@ -19,6 +20,13 @@ const Login = () => {
         dispatch(loginRequest(form));
         navigate("/");
     };
+
+    const googleSignin = async (e) => {
+        e.preventDefault();
+        dispatch(googleLoginRequest());
+
+    }
+
 
     return (
         <Box
@@ -54,6 +62,7 @@ const Login = () => {
                     margin="normal"
                     required
                 />
+                <p style={{ textAlign: "right", fontSize: "15px" }}>Forgot Password?<Link to="/forgot-password">Click Here</Link></p>
                 <Button
                     type="submit"
                     variant="contained"
@@ -64,8 +73,37 @@ const Login = () => {
                 >
                     {loading ? 'Logging in...' : 'Login'}
                 </Button>
+                <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', mt: 2, mb: 2 }}>
+                    <Divider sx={{ width: '40%', mr: 1 }} />
+                    <Typography variant="body2">or</Typography>
+                    <Divider sx={{ width: '40%', ml: 1 }} />
+                </Box>
+                <Button onClick={googleSignin}
+                    variant="contained"
+                    color="primary"
+                    startIcon={
+                        <img
+                            src="https://logos-world.net/wp-content/uploads/2020/09/Google-Symbol.png"
+                            alt=""
+                            style={{
+                                width: 24,
+                                height: 24,
+                                marginRight: 8,
+                            }}
+                        />
+                    }
+                    sx={{
+                        width: '100%',
+                        textTransform: 'none',
+                        backgroundColor: '#FFFFFF',
+                        color: '#4285F4',
+                        '&:hover': { backgroundColor: '#F7F7F7' },
+                    }}
+                >
+                    Sign in with Google
+                </Button>
                 <p style={{ textAlign: "center" }}>Not Registered?<Link to="/register">Register</Link></p>
-                <p style={{ textAlign: "center" }}>Forgot Password?<Link to="/forgot-password">Click Here</Link></p>
+
             </form>
         </Box>
     );

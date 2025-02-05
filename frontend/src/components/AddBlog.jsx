@@ -4,6 +4,7 @@ import { TextField, Button, Typography, Grid, Paper, Snackbar, Modal } from '@mu
 import { toast } from 'react-hot-toast';
 import PropTypes from 'prop-types';
 
+
 const AddBlog = ({ onBlogAdded, open, handleClose }) => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
@@ -32,23 +33,29 @@ const AddBlog = ({ onBlogAdded, open, handleClose }) => {
 
         try {
             const token = localStorage.getItem('token'); // Retrieve the token from local storage
-            const response = await axios.post('http://localhost:4000/api/blog/create', {
-                title,
-                content,
-                desc,
-            }, {
-                headers: { Authorization: `Bearer ${token}` } // Include the token in the headers
-            });
-            toast.success("Blog Added Successfully");
-            setTitle('');
-            setContent('');
-            setDesc('');
-            if (onBlogAdded) onBlogAdded(response.data);
-            handleClose();
-        } catch (error) {
+            const token1 = localStorage.getItem("Googletoken");
+            if (token || token1) {
+                const response = await axios.post('http://localhost:4000/api/blog/create', {
+                    title,
+                    content,
+                    desc,
+                }, {
+                    headers: { Authorization: `Bearer ${token}` } // Include the token in the headers
+                });
+                toast.success("Blog Added Successfully");
+                setTitle('');
+                setContent('');
+                setDesc('');
+                if (onBlogAdded) onBlogAdded(response.data);
+                handleClose();
+            }
+
+        }
+        catch (error) {
             toast.error("Failed to upload blog");
             console.error("Error creating blog:", error);
         }
+
     };
 
     return (

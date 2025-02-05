@@ -14,7 +14,7 @@ const AllBlogs = () => {
     const [newComment, setNewComment] = useState('');
     const [expandedComments, setExpandedComments] = useState({});
     const [currentPage, setCurrentPage] = useState(1);
-    const blogsPerPage = 6; // Number of blogs to display
+    const blogsPerPage = 9; // Number of blogs to display
 
     const dispatch = useDispatch();
     const { blogs, loading, error } = useSelector((state) => state.allBlogs);
