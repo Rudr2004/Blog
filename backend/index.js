@@ -12,7 +12,6 @@ const PORT = process.env.PORT || 6000;
 app.use(
   cors({
     origin: ["http://localhost:5173", "https://bapplg.netlify.app/"],
-    methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
 );
