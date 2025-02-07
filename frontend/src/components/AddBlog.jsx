@@ -35,7 +35,7 @@ const AddBlog = ({ onBlogAdded, open, handleClose }) => {
             const token = localStorage.getItem('token'); // Retrieve the token from local storage
             const token1 = localStorage.getItem("Googletoken");
             if (token || token1) {
-                const response = await axios.post('http://localhost:4000/api/blog/create', {
+                const response = await axios.post('https://blog-c1xp.onrender.com/api/blog/create', {
                     title,
                     content,
                     desc,

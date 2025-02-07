@@ -21,7 +21,7 @@ function* fetchMyBlogsSaga() {
     const token = localStorage.getItem("token");
     const response = yield call(
       axios.get,
-      "http://localhost:4000/api/blog/my-blog", // Use the /my-blog endpoint
+      "https://blog-c1xp.onrender.com/api/blog/my-blog", // Use the /my-blog endpoint
       {
         headers: { Authorization: `Bearer ${token}` },
       }
@@ -39,7 +39,7 @@ function* addCommentSaga(action) {
     const token = localStorage.getItem("token");
     const response = yield call(
       axios.post,
-      `http://localhost:4000/api/blog/${action.payload.blogId}/comment`,
+      `https://blog-c1xp.onrender.com/api/blog/${action.payload.blogId}/comment`,
       { comment: action.payload.comment },
       {
         headers: { Authorization: `Bearer ${token}` },
@@ -56,7 +56,7 @@ function* fetchAllBlogsSaga() {
   try {
     const response = yield call(
       axios.get,
-      "http://localhost:4000/api/blog/all-blog"
+      "https://blog-c1xp.onrender.com/api/blog/all-blog"
     );
 
     // Log the response data to check its structure
@@ -82,7 +82,7 @@ function* addBlogSaga(action) {
     if (token || token1) {
       const response = yield call(
         axios.post,
-        "http://localhost:4000/api/blog/create",
+        "https://blog-c1xp.onrender.com/api/blog/create",
         action.payload,
         {
           headers: { Authorization: `Bearer ${token}` },

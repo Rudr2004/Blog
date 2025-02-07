@@ -34,7 +34,7 @@ function* loginSaga(action) {
     const apicall = axios.post;
     const response = yield call(
       apicall,
-      "http://localhost:4000/api/user/login",
+      "https://blog-c1xp.onrender.com/api/user/login",
       action.payload
     );
     localStorage.setItem("token", response.data.token);
@@ -141,7 +141,7 @@ function* registerSaga(action) {
     const apicall = axios.post;
     const response = yield call(
       apicall,
-      "http://localhost:4000/api/user/signup",
+      "https://blog-c1xp.onrender.com/api/user/signup",
       action.payload
     );
     yield put(registerSuccess(response.data));
@@ -154,7 +154,7 @@ function* resetPasswordSaga(action) {
   try {
     const response = yield call(
       axios.post,
-      "http://localhost:4000/api/user/reset-password",
+      "https://blog-c1xp.onrender.com/api/user/reset-password",
       action.payload
     );
     yield put({ type: RESET_PASSWORD_SUCCESS, payload: response.data });
