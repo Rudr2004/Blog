@@ -42,10 +42,10 @@ const AddBlog = ({ onBlogAdded, open, handleClose }) => {
                 }, {
                     headers: { Authorization: `Bearer ${token}` } // Include the token in the headers
                 });
-                toast.success("Blog Added Successfully");
                 setTitle('');
                 setContent('');
                 setDesc('');
+                toast.success("Blog Added Successfully");
                 if (onBlogAdded) onBlogAdded(response.data);
                 handleClose();
             }

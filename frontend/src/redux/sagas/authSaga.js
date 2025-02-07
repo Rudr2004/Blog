@@ -13,9 +13,17 @@ import {
   GOOGLE_LOGIN_REQUEST,
   GOOGLE_LOGIN_SUCCESS,
   GOOGLE_LOGIN_FAILURE,
+  GIT_LOGIN_SUCCESS,
+  GIT_LOGIN_FAILURE,
+  GIT_LOGIN_REQUEST,
 } from "../actions/authAction.js";
-
-import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { toast } from "react-hot-toast";
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
+  GithubAuthProvider,
+} from "firebase/auth";
 import app from "../../firebase.js";
 import { getDatabase, set, ref, push } from "firebase/database";
 //import { addDoc, getFirestore, collection } from "firebase/firestore";
@@ -33,7 +41,6 @@ function* loginSaga(action) {
     yield put(loginSuccess(response.data));
   } catch (error) {
     yield put(loginFailure(error.message || "Login failed"));
-    console.log(error);
   }
 }
 
@@ -63,6 +70,7 @@ function* googleLoginSaga() {
         name: response.user.displayName,
         email: response.user.email,
       });
+      toast.success("Saved to DB");
       alert("Saved to DB");
       console.log("Data", data);
     } catch (error) {
@@ -89,6 +97,40 @@ function* googleLoginSaga() {
     yield put({
       type: GOOGLE_LOGIN_FAILURE,
       payload: error.message || "Google login failed",
+    });
+  }
+}
+
+//Git
+function* gitLoginSaga() {
+  try {
+    const auth = getAuth();
+    console.log("auth", auth);
+    const provider = new GithubAuthProvider();
+    const response = yield call(signInWithPopup, auth, provider);
+    console.log("response", response);
+    if (!response) {
+      console.log("Response not get");
+    }
+    const credential = GithubAuthProvider.credentialFromResult(response);
+    if (!credential) {
+      throw new Error("Failed to get credentials from Git login");
+    }
+    const token = credential.accessToken;
+    const user = response.user;
+    console.log("Git user:", user);
+    localStorage.setItem("Gittoken", token);
+    yield put({ type: GIT_LOGIN_SUCCESS, payload: {} });
+  } catch (error) {
+    console.error("Git login error:", error);
+    const email = error.customData.email;
+    console.log("Email", email);
+    // The AuthCredential type that was used.
+    const credential = GithubAuthProvider.credentialFromError(error);
+    console.log("Cre", credential);
+    yield put({
+      type: GIT_LOGIN_FAILURE,
+      payload: error.message || "Git login failed",
     });
   }
 }
@@ -130,4 +172,5 @@ export default function* authSaga() {
   yield takeLatest(REGISTER_REQUEST, registerSaga);
   yield takeLatest(RESET_PASSWORD_REQUEST, resetPasswordSaga);
   yield takeLatest(GOOGLE_LOGIN_REQUEST, googleLoginSaga);
+  yield takeLatest(GIT_LOGIN_REQUEST, gitLoginSaga);
 }

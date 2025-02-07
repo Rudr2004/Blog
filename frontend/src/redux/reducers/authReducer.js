@@ -9,6 +9,9 @@ import {
   GOOGLE_LOGIN_REQUEST,
   GOOGLE_LOGIN_SUCCESS,
   GOOGLE_LOGIN_FAILURE,
+  GIT_LOGIN_REQUEST,
+  GIT_LOGIN_SUCCESS,
+  GIT_LOGIN_FAILURE,
 } from "../actions/authAction";
 
 const initialState = {
@@ -36,10 +39,8 @@ const authReducer = (state = initialState, action) => {
         success: false,
       };
     case GOOGLE_LOGIN_REQUEST:
-      console.log("reuest");
       return { ...state, loading: true, error: null };
     case GOOGLE_LOGIN_SUCCESS:
-      console.log("YEss");
       return {
         ...state,
         loading: false,
@@ -47,7 +48,15 @@ const authReducer = (state = initialState, action) => {
         success: true,
       };
     case GOOGLE_LOGIN_FAILURE:
-      console.log("Np");
+      return { ...state, loading: true, error: action.payload, success: false };
+    case GIT_LOGIN_REQUEST:
+      console.log("req");
+      return { ...state, loading: true, error: null };
+    case GIT_LOGIN_SUCCESS:
+      console.log("succ");
+      return { ...state, loading: false, user: action.payload, success: true };
+    case GIT_LOGIN_FAILURE:
+      console.log("fail");
       return { ...state, loading: true, error: action.payload, success: false };
     case REGISTER_FAILURE:
       return {

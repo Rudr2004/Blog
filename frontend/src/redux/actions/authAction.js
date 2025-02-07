@@ -6,6 +6,10 @@ export const GOOGLE_LOGIN_REQUEST = "GOOGLE_LOGIN_REQUEST";
 export const GOOGLE_LOGIN_SUCCESS = "GOOGLE_LOGIN_SUCCESS";
 export const GOOGLE_LOGIN_FAILURE = "GOOGLE_LOGIN_FAILURE";
 
+export const GIT_LOGIN_REQUEST = "GIT_LOGIN_REQUEST";
+export const GIT_LOGIN_SUCCESS = "GIT_LOGIN_SUCCESS";
+export const GIT_LOGIN_FAILURE = "GIT_LOGIN_FAILURE";
+
 export const REGISTER_REQUEST = "REGISTER_REQUEST";
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 export const REGISTER_FAILURE = "REGISTER_FAILURE";
@@ -37,6 +41,21 @@ export const googleLoginSuccess = () => ({
 
 export const googleLoginFailure = (error) => ({
   type: GOOGLE_LOGIN_FAILURE,
+  payload: error,
+});
+
+//Git Login
+export const gitLoginRequest = () => ({
+  type: GIT_LOGIN_REQUEST,
+});
+
+export const gitLoginSucess = () => ({
+  type: GIT_LOGIN_SUCCESS,
+  payload: {},
+});
+
+export const gitLoginFailure = (error) => ({
+  type: GIT_LOGIN_FAILURE,
   payload: error,
 });
 

@@ -9,6 +9,7 @@ import Login from './pages/Login';
 import { useSelector } from 'react-redux';
 import AddBlog from './components/AddBlog';
 import ForgotPassword from './pages/ForgotPassword';
+import { Toaster } from 'react-hot-toast';
 
 const App = () => {
   const { user } = useSelector((state) => state.auth);
@@ -21,6 +22,7 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <Router>
+        <Toaster />
         <Navbar onAddBlogClick={toggleAddBlog} />
         <AddBlog open={isAddBlogVisible} handleClose={toggleAddBlog} />
         <Routes>
