@@ -17,12 +17,6 @@ app.use(
     methods: ["GET", "POST", "PUT", "DELETE"],
   })
 );
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", req.headers.origin);
-  res.header("Access-Control-Allow-Credentials", true);
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-  next();
-});
 
 app.use(express.json());
 app.use("/api/blog", router);
