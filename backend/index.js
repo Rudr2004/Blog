@@ -11,11 +11,7 @@ const PORT = process.env.PORT || 6000;
 
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "https://bapplg.netlify.app/",
-      "https://blog-fe-afyh.onrender.com",
-    ],
+    origin: ["http://localhost:5173", "https://baaplg.netlify.app/"],
     credentials: true,
   })
 );
