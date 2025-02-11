@@ -50,7 +50,6 @@ const ForgotPassword = () => {
                     helperText={formik.touched.email && formik.errors.email}
                     fullWidth
                     margin="normal"
-                    required
                 />
                 <TextField
                     label="New Password"
@@ -62,7 +61,6 @@ const ForgotPassword = () => {
                     helperText={formik.touched.password && formik.errors.password}
                     fullWidth
                     margin="normal"
-                    required
                 />
                 <Button type="submit" variant="contained" color="primary" disabled={loading} fullWidth sx={{ mt: 2 }}>
                     {loading ? 'Resetting...' : 'Reset'}

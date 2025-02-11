@@ -3,6 +3,9 @@ import axios from 'axios';
 import { TextField, Button, Typography, Grid, Paper, Snackbar, Modal } from '@mui/material';
 import { toast } from 'react-hot-toast';
 import PropTypes from 'prop-types';
+import { useFormik } from "formik";
+import * as Yup from "yup";
+
 
 
 const AddBlog = ({ onBlogAdded, open, handleClose }) => {
@@ -11,6 +14,22 @@ const AddBlog = ({ onBlogAdded, open, handleClose }) => {
     const [desc, setDesc] = useState('');
     const [error, setError] = useState('');
     const [modalOpen, setModalOpen] = useState(false);
+
+    //Use Formik yup for validation
+    const formik = useFormik({
+        initialValues: {
+            title: '',
+            desc: ''
+        },
+        validationSchema: Yup.object({
+            title: Yup.string().required('Title is required'),
+            desc: Yup.string().required('Description is required')
+        }),
+        onSubmit: (values, { setSubmitting }) => {
+            handleSubmit(values);
+            setSubmitting(false)
+        }
+    })
 
     useEffect(() => {
         if (open) {
@@ -74,28 +93,30 @@ const AddBlog = ({ onBlogAdded, open, handleClose }) => {
                 <Typography variant="h4" gutterBottom color="primary">
                     Add a New Blog
                 </Typography>
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={formik.handleSubmit}>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
                             <TextField
                                 label="Title"
                                 variant="outlined"
-                                value={title}
-                                onChange={(e) => setTitle(e.target.value)}
+                                value={formik.values.title}
+                                onChange={formik.handleChange}
                                 margin="normal"
                                 fullWidth
-                                required
+                                error={formik.touched.title && Boolean(formik.errors.title)}
+                                helperText={formik.touched.title && formik.errors.title}
                             />
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
                                 label="Description"
                                 variant="outlined"
-                                value={desc}
-                                onChange={(e) => setDesc(e.target.value)}
+                                value={formik.values.desc}
+                                onChange={formik.handleChange}
                                 margin="normal"
                                 fullWidth
-                                required
+                                error={formik.touched.desc && Boolean(formik.errors.desc)}
+                                helperText={formik.touched.desc && formik.errors.desc}
                             />
                         </Grid>
                         <Grid item xs={12}>

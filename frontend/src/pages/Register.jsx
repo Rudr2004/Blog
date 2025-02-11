@@ -1,6 +1,6 @@
 //import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { registerRequest, googleLoginRequest, gitLoginRequest } from '../redux/actions/authAction.js';
+import { registerRequest, googleLoginRequest } from '../redux/actions/authAction.js';
 import { useNavigate } from "react-router-dom";
 import { Box, TextField, Button, Typography, Divider } from '@mui/material';
 import { toast } from "react-hot-toast"
@@ -22,8 +22,10 @@ const Register = () => {
             password: '',
         },
         validationSchema: Yup.object({
-            username: Yup.string().required('Username is required').min(2, "Atleast 2 character"),
-            email: Yup.string().email('Invalid email').required('Email is required'),
+            username: Yup.string().required('Username is required').min(2, "Atleast 2 character").max(10, "maximum 10 characters"),
+            email: Yup.string().email('Invalid email').required('Email is required').test('Email must be in lowercase', (value) => {
+                return value === value.toLowerCase();
+            }),
             password: Yup.string().min(6, 'Paassword must be at least 6 characters')
                 .max(8, 'Password must be at least 8 characters').required('Password is required')
         }),
@@ -41,21 +43,6 @@ const Register = () => {
     const googleSignin = (e) => {
         e.preventDefault();
         dispatch(googleLoginRequest());
-        if (success == true) {
-            toast.success(" Logged in");
-        } else {
-            toast.error("Failed to Login")
-        }
-    }
-
-    const gitsigin = async (e) => {
-        e.preventDefault();
-        dispatch(gitLoginRequest());
-        if (success == true) {
-            toast.success("Logged in");
-        } else {
-            toast.error("Failed to Login")
-        }
     }
 
 
@@ -81,7 +68,6 @@ const Register = () => {
                     helperText={formik.touched.username && formik.errors.username}
                     fullWidth
                     margin="normal"
-                    required
                 />
                 <TextField
                     label="Email"
@@ -89,10 +75,9 @@ const Register = () => {
                     value={formik.values.email}
                     onChange={formik.handleChange}
                     error={formik.touched.email && Boolean(formik.errors.email)}
-                    helperText={formik.touched.email && formik.errors.name}
+                    helperText={formik.touched.email && formik.errors.email}
                     fullWidth
                     margin="normal"
-                    required
                 />
                 <TextField
                     label="Password"
@@ -104,7 +89,6 @@ const Register = () => {
                     helperText={formik.touched.password && formik.errors.password}
                     fullWidth
                     margin="normal"
-                    required
                 />
                 <Button type="submit" variant="contained" color="primary" disabled={loading} fullWidth sx={{ mt: 2 }}>
                     {loading ? 'Registering...' : 'Register'}
@@ -140,35 +124,6 @@ const Register = () => {
                     }}
                 >
                     Sign in with Google
-                </Button>
-
-                {/** Signin with Github */}
-                <Button onClick={gitsigin}
-                    variant="contained"
-                    color="primary"
-                    style={{ marginTop: "2px" }}
-                    startIcon={
-                        <img
-                            src="https://cdn-icons-png.flaticon.com/512/25/25231.png"
-                            alt="github"
-                            style={{
-                                width: 24,
-                                height: 24,
-                                marginRight: 8,
-                            }}
-                        />
-                    }
-                    sx={{
-                        width: { xs: '100%', sm: '100%', md: '100%', lg: '100%' },
-                        textTransform: 'none',
-                        backgroundColor: '#FFFFFF',
-                        color: '#4285F4',
-                        '&:hover': { backgroundColor: '#F7F7F7' },
-                        padding: { xs: '6px 12px', sm: '8px 16px', md: '10px 20px', lg: '12px 24px' },
-                        fontSize: { xs: '12px', sm: '14px', md: '16px', lg: '18px' },
-                    }}
-                >
-                    Sign in with Github
                 </Button>
 
             </form>

@@ -1,5 +1,5 @@
-import Blog from "../model/Blog.js";
-import User from "../model/User.js";
+import { Blog, Validation } from "../model/Blog.js";
+import { User } from "../model/User.js";
 
 export const getBlogs = async (req, res) => {
   const { page = 1, limit = 50 } = req.query;
@@ -24,6 +24,7 @@ export const getBlogs = async (req, res) => {
 };
 
 export const createBlog = async (req, res) => {
+  const { value, error } = await Validation.blogValidation.validate(req.body);
   const { title, content, desc } = req.body;
   const userId = req.user ? req.user.id : null; // Get the user ID from the request
 

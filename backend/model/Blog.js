@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { blogValidation } from "./Validations.js";
 
 const Schema = mongoose.Schema;
 
@@ -35,5 +36,7 @@ const blogSchema = new Schema({
 });
 
 const Blog = mongoose.model("Blog", blogSchema);
-
-export default Blog;
+const Validation = (blog) => {
+  return blogValidation.validate(blog);
+};
+export { Blog, Validation };

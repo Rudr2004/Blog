@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-
+import { userValidation } from "./Validations.js";
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
@@ -23,5 +23,8 @@ const userSchema = new Schema({
 });
 
 const User = mongoose.model("User", userSchema);
+const Validation = (user) => {
+  return userValidation.validate(user);
+};
 
-export default User;
+export { User, Validation };

@@ -1,6 +1,6 @@
 //import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { gitLoginRequest, googleLoginRequest, loginRequest } from '../redux/actions/authAction.js';
+import { googleLoginRequest, loginRequest } from '../redux/actions/authAction.js';
 import { Box, TextField, Button, Typography, Divider } from '@mui/material';
 import { Link, useNavigate } from "react-router-dom";
 import toast from 'react-hot-toast';
@@ -10,7 +10,7 @@ import * as Yup from "yup";
 const Login = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { loading, success } = useSelector((state) => state.auth);
+    const { loading } = useSelector((state) => state.auth);
 
     //Use Formik yup for validation
     const formik = useFormik({
@@ -38,21 +38,6 @@ const Login = () => {
     const googleSignin = async (e) => {
         e.preventDefault();
         dispatch(googleLoginRequest());
-        if (success == true) {
-            toast.success("Loggedin")
-        } else {
-            toast.error("Failed to login")
-        }
-    }
-
-    const gitsigin = async (e) => {
-        e.preventDefault();
-        dispatch(gitLoginRequest());
-        if (success == true) {
-            toast.success("Loggedin")
-        } else {
-            toast.error("Failed to login")
-        }
     }
 
     return (
@@ -79,7 +64,6 @@ const Login = () => {
                     helperText={formik.touched.email && formik.errors.email}
                     fullWidth
                     margin="normal"
-                    required
                 />
                 <TextField
                     label="Password"
@@ -91,7 +75,6 @@ const Login = () => {
                     helperText={formik.touched.password && formik.errors.password}
                     fullWidth
                     margin="normal"
-                    required
                 />
                 <p style={{ textAlign: "right", fontSize: "15px" }}>Forgot Password?<Link to="/forgot-password">Click Here</Link></p>
                 <Button
@@ -136,35 +119,6 @@ const Login = () => {
                     }}
                 >
                     Sign in with Google
-                </Button>
-
-                {/** Signin with Github */}
-                <Button onClick={gitsigin}
-                    variant="contained"
-                    color="primary"
-                    style={{ marginTop: "2px" }}
-                    startIcon={
-                        <img
-                            src="https://cdn-icons-png.flaticon.com/512/25/25231.png"
-                            alt="github"
-                            style={{
-                                width: 24,
-                                height: 24,
-                                marginRight: 8,
-                            }}
-                        />
-                    }
-                    sx={{
-                        width: { xs: '100%', sm: '100%', md: '100%', lg: '100%' },
-                        textTransform: 'none',
-                        backgroundColor: '#FFFFFF',
-                        color: '#4285F4',
-                        '&:hover': { backgroundColor: '#F7F7F7' },
-                        padding: { xs: '6px 12px', sm: '8px 16px', md: '10px 20px', lg: '12px 24px' },
-                        fontSize: { xs: '12px', sm: '14px', md: '16px', lg: '18px' },
-                    }}
-                >
-                    Sign in with Github
                 </Button>
 
                 <p style={{ textAlign: "center" }}>Not Registered?<Link to="/register">Register</Link></p>

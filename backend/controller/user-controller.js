@@ -1,9 +1,11 @@
-import User from "../model/User.js";
-import Blog from "../model/Blog.js";
+import { User, Validation } from "../model/User.js";
+import { Blog } from "../model/Blog.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 export const signUp = async (req, res, next) => {
+  const { value, error } = await Validation.userValidation.validate(req.body);
+
   const { name, email, password } = req.body;
 
   let existingUser;
@@ -37,6 +39,7 @@ export const signUp = async (req, res, next) => {
 };
 
 export const logIn = async (req, res, next) => {
+  const { value, error } = Validation.userValidation.validate(req.body);
   const { email, password } = req.body;
 
   let existingUser;
@@ -103,6 +106,7 @@ export const addComment = async (req, res) => {
 };
 
 export const resetPassword = async (req, res) => {
+  const { value, error } = Validation.userValidation.validate(req.body);
   const { email, password } = req.body;
 
   let existingUser;
