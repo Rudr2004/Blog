@@ -24,14 +24,14 @@ export const getBlogs = async (req, res) => {
 };
 
 export const createBlog = async (req, res) => {
-  const { value, error } = await Validation.blogValidation.validate(req.body);
-  const { title, content, desc } = req.body;
+  //const { value, error } = await Validation.blogValidation.validate(req.body);
+  const { title, desc } = req.body;
   const userId = req.user ? req.user.id : null; // Get the user ID from the request
 
   console.log("Creating blog for user ID:", userId); // Log the user ID
 
   try {
-    const newBlog = new Blog({ title, content, desc, user: userId });
+    const newBlog = new Blog({ title, desc, user: userId });
     await newBlog.save();
 
     // Update the user's blog array

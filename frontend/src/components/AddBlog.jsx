@@ -3,10 +3,6 @@ import axios from 'axios';
 import { TextField, Button, Typography, Grid, Paper, Snackbar, Modal } from '@mui/material';
 import { toast } from 'react-hot-toast';
 import PropTypes from 'prop-types';
-import { useFormik } from "formik";
-import * as Yup from "yup";
-
-
 
 const AddBlog = ({ onBlogAdded, open, handleClose }) => {
     const [title, setTitle] = useState('');
@@ -14,22 +10,6 @@ const AddBlog = ({ onBlogAdded, open, handleClose }) => {
     const [desc, setDesc] = useState('');
     const [error, setError] = useState('');
     const [modalOpen, setModalOpen] = useState(false);
-
-    //Use Formik yup for validation
-    const formik = useFormik({
-        initialValues: {
-            title: '',
-            desc: ''
-        },
-        validationSchema: Yup.object({
-            title: Yup.string().required('Title is required'),
-            desc: Yup.string().required('Description is required')
-        }),
-        onSubmit: (values, { setSubmitting }) => {
-            handleSubmit(values);
-            setSubmitting(false)
-        }
-    })
 
     useEffect(() => {
         if (open) {
@@ -45,8 +25,8 @@ const AddBlog = ({ onBlogAdded, open, handleClose }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!title || !desc) {
-            setError('Title and Description are required');
+        if (!title || !content) {
+            setError('All fields are required');
             return;
         }
 
@@ -54,7 +34,7 @@ const AddBlog = ({ onBlogAdded, open, handleClose }) => {
             const token = localStorage.getItem('token'); // Retrieve the token from local storage
             const token1 = localStorage.getItem("Googletoken");
             if (token || token1) {
-                const response = await axios.post('https://blog-c1xp.onrender.com/api/blog/create', {
+                const response = await axios.post('http://localhost:4000/api/blog/create', {
                     title,
                     content,
                     desc,
@@ -93,30 +73,30 @@ const AddBlog = ({ onBlogAdded, open, handleClose }) => {
                 <Typography variant="h4" gutterBottom color="primary">
                     Add a New Blog
                 </Typography>
-                <form onSubmit={formik.handleSubmit}>
+                <form onSubmit={handleSubmit}>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
                             <TextField
                                 label="Title"
                                 variant="outlined"
-                                value={formik.values.title}
-                                onChange={formik.handleChange}
+                                value={title}
+                                onChange={(e) => setTitle(e.target.value)}
                                 margin="normal"
                                 fullWidth
-                                error={formik.touched.title && Boolean(formik.errors.title)}
-                                helperText={formik.touched.title && formik.errors.title}
+                                error={!title && error}
+                                helperText={!title && error}
                             />
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
-                                label="Description"
+                                label="Content"
                                 variant="outlined"
-                                value={formik.values.desc}
-                                onChange={formik.handleChange}
+                                value={content}
+                                onChange={(e) => setContent(e.target.value)}
                                 margin="normal"
                                 fullWidth
-                                error={formik.touched.desc && Boolean(formik.errors.desc)}
-                                helperText={formik.touched.desc && formik.errors.desc}
+                                error={!content && error}
+                                helperText={!content && error}
                             />
                         </Grid>
                         <Grid item xs={12}>
